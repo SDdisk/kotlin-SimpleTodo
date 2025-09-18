@@ -1,12 +1,12 @@
 package com.example.simpletodo.api.advice
 
-import com.example.simpletodo.api.advice.response.ErrorResponse
 import com.example.simpletodo.api.exception.TodoNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import java.time.LocalDateTime
 
 @RestControllerAdvice
 class RestControllerAdvice {
@@ -28,4 +28,11 @@ class RestControllerAdvice {
                 .fieldErrors
                 .map { "${it.field}: ${it.defaultMessage}" }
         )
+
+    data class ErrorResponse(
+        val code: String,
+        val message: String,
+        val timestamp: LocalDateTime = LocalDateTime.now(),
+        val details: List<String> = emptyList(),
+    )
 }
