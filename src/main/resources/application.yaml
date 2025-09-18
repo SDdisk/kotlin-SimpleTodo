@@ -3,10 +3,10 @@ spring:
     name: SimpleTodo
   # DATABASE
   datasource:
-    driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/SimpleTodo
+    driver-class-name: ${DB_DRIVERCLASS}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
   # JPA
   jpa:
     hibernate:
