@@ -2,8 +2,7 @@ package com.example.simpletodo.api.service
 
 import com.example.simpletodo.api.dto.TodoDto
 import com.example.simpletodo.api.exception.TodoNotFoundException
-import com.example.simpletodo.api.extention.toDto
-import com.example.simpletodo.api.extention.toEntity
+import com.example.simpletodo.store.entity.Todo
 import com.example.simpletodo.store.repository.TodoRepository
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
@@ -67,4 +66,22 @@ class TodoServiceImpl(
     companion object {
         private val log = LoggerFactory.getLogger(this::class.java)
     }
+
+    // entity -> dto
+    private fun Todo.toDto(): TodoDto =
+        TodoDto(
+            this.id,
+            this.title,
+            this.description,
+            this.isCompleted
+        )
+
+    // dto -> entity
+    private fun TodoDto.toEntity(): Todo =
+        Todo(
+            this.id,
+            this.title,
+            this.description,
+            this.isCompleted
+        )
 }
