@@ -5,6 +5,8 @@ import com.example.simpletodo.api.exception.TodoNotFoundException
 import com.example.simpletodo.store.entity.Todo
 import com.example.simpletodo.store.repository.TodoRepository
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -13,11 +15,12 @@ class TodoServiceImpl(
     private val todoRepository: TodoRepository
 ) : TodoService {
 
-    override fun getAll(): List<TodoDto> {
+    override fun getAll(page: Pageable): List<TodoDto> {
         log.info("SERVICE | Get all todos")
 
-        return todoRepository.findAll()
-            .map { it.toDto() }
+        val todos = todoRepository.findAll(page)
+
+        return todos.map { it.toDto() }.toList()
     }
 
     override fun getById(id: Long): TodoDto {
@@ -28,12 +31,12 @@ class TodoServiceImpl(
             ?: throw TodoNotFoundException(id)
     }
 
-    override fun getByTitle(title: String): List<TodoDto> {
-        log.info("SERVICE | Get todos by title=$title")
-
-        return todoRepository.findByTitleStartsWithIgnoreCaseOrderByTitle(title)
-            .map { it.toDto() }
-    }
+//    override fun getByTitle(title: String): List<TodoDto> {
+//        log.info("SERVICE | Get todos by title=$title")
+//
+//        return todoRepository.findByTitleStartsWithIgnoreCaseOrderByTitle(title)
+//            .map { it.toDto() }
+//    }
 
     override fun create(todoDto: TodoDto): TodoDto {
         log.info("SERVICE | Save todo=$todoDto")

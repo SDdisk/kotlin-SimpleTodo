@@ -4,6 +4,10 @@ import com.example.simpletodo.api.dto.TodoDto
 import com.example.simpletodo.api.service.TodoService
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,32 +28,33 @@ class TodoController(
 
     @GetMapping("/todos")
     @ResponseStatus(HttpStatus.OK)
-    fun getAll(): List<TodoDto> {
-        log.info("CONTROLLER | path:'.../todos', method:'GET'")
+    fun getAll(@PageableDefault(page = 0, size = 5, sort = ["id"], direction = Sort.Direction.DESC) page: Pageable): List<TodoDto> {
+        log.info("CONTROLLER | path: '.../todos', method: 'GET'")
 
-        return todoService.getAll()
+        return todoService.getAll(page)
     }
 
     @GetMapping("/todo/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getById(@PathVariable id: Long): TodoDto {
-        log.info("CONTROLLER | path:'.../todo/$id', method:'GET'")
+        log.info("CONTROLLER | path: '.../todo/$id', method: 'GET'")
 
         return todoService.getById(id)
     }
 
-    @GetMapping("/todo")
-    @ResponseStatus(HttpStatus.OK)
-    fun getByTitle(@RequestParam("title") title: String): List<TodoDto> {
-        log.info("CONTROLLER | path:'.../todo', method:'GET', param:'title=$title'")
-
-        return todoService.getByTitle(title)
-    }
+    // closed)))
+//    @GetMapping("/todo")
+//    @ResponseStatus(HttpStatus.OK)
+//    fun getByTitle(@RequestParam("title") title: String): List<TodoDto> {
+//        log.info("CONTROLLER | path: '.../todo', method: 'GET', param: 'title=$title'")
+//
+//        return todoService.getByTitle(title)
+//    }
 
     @PostMapping("/create_todo")
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody @Valid todoDto: TodoDto): TodoDto {
-        log.info("CONTROLLER | path:'.../create_todo', method:'POST', body:'$todoDto'")
+        log.info("CONTROLLER | path: '.../create_todo', method: 'POST', body: '$todoDto'")
 
         return todoService.create(todoDto)
     }
@@ -57,7 +62,7 @@ class TodoController(
     @PutMapping("/update_todo/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun update(@PathVariable id: Long, @RequestBody @Valid todoDto: TodoDto): TodoDto {
-        log.info("CONTROLLER | path:'.../update_todo/$id', method:'PUT', body:'$todoDto'")
+        log.info("CONTROLLER | path: '.../update_todo/$id', method: 'PUT', body: '$todoDto'")
 
         return todoService.update(id, todoDto)
     }
@@ -65,7 +70,7 @@ class TodoController(
     @DeleteMapping("/delete_todo/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Long) {
-        log.info("CONTROLLER | path:'.../delete_todo/$id', method:'DELETE'")
+        log.info("CONTROLLER | path: '.../delete_todo/$id', method: 'DELETE'")
 
         todoService.delete(id)
     }
