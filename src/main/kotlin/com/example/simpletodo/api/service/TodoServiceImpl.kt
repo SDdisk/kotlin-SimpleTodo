@@ -90,7 +90,7 @@ class TodoServiceImpl(
         )
 
     // page -> pageDto
-    private fun Page<TodoDto>.toDto(): PageDto<TodoDto> =
+    private fun <T> Page<T>.toDto(): PageDto<T> =
         PageDto(
             content = this.content,
             currentPage = this.number,
