@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TodoRepository : JpaRepository<Todo, Long>, JpaSpecificationExecutor<Todo> {
-    //fun findByTitleStartsWithIgnoreCaseOrderByTitle(title: String): List<Todo>
     override fun findAll(page: Pageable): Page<Todo>
 }
