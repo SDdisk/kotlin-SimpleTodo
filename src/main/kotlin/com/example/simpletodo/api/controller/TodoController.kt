@@ -6,7 +6,6 @@ import com.example.simpletodo.api.dto.TodoDto
 import com.example.simpletodo.api.service.TodoService
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
