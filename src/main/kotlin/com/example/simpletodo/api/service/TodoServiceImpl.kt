@@ -75,7 +75,9 @@ class TodoServiceImpl(
             this.id,
             this.title,
             this.description,
-            this.isCompleted
+            this.isCompleted,
+            this.createdAt,
+            this.updatedAt
         )
 
     // dto -> entity
@@ -84,7 +86,9 @@ class TodoServiceImpl(
             this.id,
             this.title,
             this.description,
-            this.isCompleted
+            this.isCompleted,
+            this.createdAt,
+            this.updatedAt
         )
 
     // page -> pageDto

@@ -3,6 +3,7 @@ package com.example.simpletodo.api.dto
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
+import java.time.Instant
 
 data class TodoDto(
     val id: Long? = null,
@@ -16,5 +17,9 @@ data class TodoDto(
     val description: String,
 
     @field:NotNull(message = "isCompleted cannot be null")
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
+
+    val createdAt: Instant?,
+
+    val updatedAt: Instant?,
 )
