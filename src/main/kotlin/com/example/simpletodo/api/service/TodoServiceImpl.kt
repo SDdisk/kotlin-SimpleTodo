@@ -1,5 +1,6 @@
 package com.example.simpletodo.api.service
 
+import com.example.simpletodo.api.dto.PageDto
 import com.example.simpletodo.api.dto.TodoDto
 import com.example.simpletodo.api.exception.TodoNotFoundException
 import com.example.simpletodo.store.entity.Todo
@@ -15,12 +16,12 @@ class TodoServiceImpl(
     private val todoRepository: TodoRepository
 ) : TodoService {
 
-    override fun getAll(page: Pageable): List<TodoDto> {
+    override fun getAll(page: Pageable): PageDto<TodoDto> {
         log.info("SERVICE | Get all todos")
 
-        val todos = todoRepository.findAll(page)
-
-        return todos.map { it.toDto() }.toList()
+        return todoRepository.findAll(page)
+            .map { it.toDto() } // entity to dto
+            .toDto() // page to dto
     }
 
     override fun getById(id: Long): TodoDto {
@@ -86,5 +87,15 @@ class TodoServiceImpl(
             this.title,
             this.description,
             this.isCompleted
+        )
+
+    // page -> pageDto
+    private fun Page<TodoDto>.toDto(): PageDto<TodoDto> =
+        PageDto(
+            content = this.content,
+            currentPage = this.number,
+            pageSize = this.size,
+            totalElements = this.totalElements,
+            totalPages = this.totalPages
         )
 }

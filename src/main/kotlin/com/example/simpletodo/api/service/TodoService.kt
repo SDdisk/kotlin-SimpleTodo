@@ -1,10 +1,12 @@
 package com.example.simpletodo.api.service
 
+import com.example.simpletodo.api.dto.PageDto
 import com.example.simpletodo.api.dto.TodoDto
 import org.springframework.data.domain.Pageable
 
 interface TodoService {
-    fun getAll(page: Pageable): List<TodoDto>
+    // TODO: понять, что вернуть: Page<TodoDto> или List<TodoDto>
+    fun getAll(page: Pageable): PageDto<TodoDto>
     fun getById(id: Long): TodoDto
     //fun getByTitle(title: String): List<TodoDto>
 

@@ -1,5 +1,6 @@
 package com.example.simpletodo.api.controller
 
+import com.example.simpletodo.api.dto.PageDto
 import com.example.simpletodo.api.dto.TodoDto
 import com.example.simpletodo.api.service.TodoService
 import jakarta.validation.Valid
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
@@ -28,7 +28,7 @@ class TodoController(
 
     @GetMapping("/todos")
     @ResponseStatus(HttpStatus.OK)
-    fun getAll(@PageableDefault(page = 0, size = 5, sort = ["id"], direction = Sort.Direction.DESC) page: Pageable): List<TodoDto> {
+    fun getAll(@PageableDefault(page = 0, size = 5, sort = ["id"], direction = Sort.Direction.DESC) page: Pageable): PageDto<TodoDto> {
         log.info("CONTROLLER | path: '.../todos', method: 'GET', page:'number=${page.pageNumber}, size=${page.pageSize}, sortBy=${page.sort}'")
 
         return todoService.getAll(page)
