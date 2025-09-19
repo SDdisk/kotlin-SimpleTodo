@@ -1,5 +1,6 @@
 package com.example.simpletodo.api.controller
 
+import com.example.simpletodo.api.dto.FilterDto
 import com.example.simpletodo.api.dto.PageDto
 import com.example.simpletodo.api.dto.TodoDto
 import com.example.simpletodo.api.service.TodoService
@@ -28,10 +29,10 @@ class TodoController(
 
     @GetMapping("/todos")
     @ResponseStatus(HttpStatus.OK)
-    fun getAll(@PageableDefault(page = 0, size = 5, sort = ["id"], direction = Sort.Direction.DESC) page: Pageable): PageDto<TodoDto> {
+    fun getAll(@PageableDefault(page = 0, size = 5, sort = ["id"], direction = Sort.Direction.DESC) page: Pageable, filter: FilterDto): PageDto<TodoDto> {
         log.info("CONTROLLER | path: '.../todos', method: 'GET', page:'number=${page.pageNumber}, size=${page.pageSize}, sortBy=${page.sort}'")
 
-        return todoService.getAll(page)
+        return todoService.getAll(page, filter)
     }
 
     @GetMapping("/todo/{id}")
@@ -41,15 +42,6 @@ class TodoController(
 
         return todoService.getById(id)
     }
-
-    // closed)))
-//    @GetMapping("/todo")
-//    @ResponseStatus(HttpStatus.OK)
-//    fun getByTitle(@RequestParam("title") title: String): List<TodoDto> {
-//        log.info("CONTROLLER | path: '.../todo', method: 'GET', param: 'title=$title'")
-//
-//        return todoService.getByTitle(title)
-//    }
 
     @PostMapping("/create_todo")
     @ResponseStatus(HttpStatus.CREATED)

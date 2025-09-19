@@ -1,13 +1,16 @@
 package com.example.simpletodo.api.service
 
+import com.example.simpletodo.api.dto.FilterDto
 import com.example.simpletodo.api.dto.PageDto
 import com.example.simpletodo.api.dto.TodoDto
 import com.example.simpletodo.api.exception.TodoNotFoundException
 import com.example.simpletodo.store.entity.Todo
 import com.example.simpletodo.store.repository.TodoRepository
+import jakarta.persistence.criteria.Predicate
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -16,10 +19,12 @@ class TodoServiceImpl(
     private val todoRepository: TodoRepository
 ) : TodoService {
 
-    override fun getAll(page: Pageable): PageDto<TodoDto> {
+    override fun getAll(page: Pageable, filter: FilterDto): PageDto<TodoDto> {
         log.info("SERVICE | Get all todos")
 
-        return todoRepository.findAll(page)
+        val spec = filter.toSpecification()
+
+        return todoRepository.findAll(spec, page)
             .map { it.toDto() } // entity to dto
             .toDto() // page to dto
     }
@@ -31,13 +36,6 @@ class TodoServiceImpl(
             ?.toDto()
             ?: throw TodoNotFoundException(id)
     }
-
-//    override fun getByTitle(title: String): List<TodoDto> {
-//        log.info("SERVICE | Get todos by title=$title")
-//
-//        return todoRepository.findByTitleStartsWithIgnoreCaseOrderByTitle(title)
-//            .map { it.toDto() }
-//    }
 
     override fun create(todoDto: TodoDto): TodoDto {
         log.info("SERVICE | Save todo=$todoDto")
@@ -98,4 +96,23 @@ class TodoServiceImpl(
             totalElements = this.totalElements,
             totalPages = this.totalPages
         )
+
+    // filter -> specification
+    private fun FilterDto.toSpecification(): Specification<Todo> = Specification { root, query, cb ->
+        val predicates = mutableListOf<Predicate>()
+
+        this.title?.let { predicates.add(
+            cb.like(root.get("title"), "$it%")
+        ) }
+
+        this.description?.let { predicates.add(
+            cb.like(root.get("description"), "$it%")
+        ) }
+
+        this.isCompleted?.let { predicates.add(
+            cb.equal(root.get<Boolean>("isCompleted"), it)
+        ) }
+
+        cb.and(*predicates.toTypedArray())
+    }
 }
