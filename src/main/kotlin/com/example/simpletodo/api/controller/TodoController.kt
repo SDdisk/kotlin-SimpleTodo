@@ -29,7 +29,7 @@ class TodoController(
     @GetMapping("/todos")
     @ResponseStatus(HttpStatus.OK)
     fun getAll(@PageableDefault(page = 0, size = 5, sort = ["id"], direction = Sort.Direction.DESC) page: Pageable): List<TodoDto> {
-        log.info("CONTROLLER | path: '.../todos', method: 'GET'")
+        log.info("CONTROLLER | path: '.../todos', method: 'GET', page:'number=${page.pageNumber}, size=${page.pageSize}, sortBy=${page.sort}'")
 
         return todoService.getAll(page)
     }
