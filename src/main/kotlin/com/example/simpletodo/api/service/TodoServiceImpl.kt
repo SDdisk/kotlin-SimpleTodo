@@ -55,7 +55,7 @@ class TodoServiceImpl(
         existingTodo.description = todoDto.description
         existingTodo.isCompleted = todoDto.isCompleted
 
-        log.info("SERVICE | Save todo=$existingTodo")
+        log.info("SERVICE | Save updated todo=$existingTodo")
         return todoRepository.save(existingTodo).toDto()
     }
 
