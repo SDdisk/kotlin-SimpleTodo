@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/todos")
 class TodoController(
     private val todoService: TodoService,
 ) {
 
-    @GetMapping("/todos")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     fun getAll(@PageableDefault(page = 0, size = 5, sort = ["id"], direction = Sort.Direction.DESC) page: Pageable, filter: FilterDto): PageDto<TodoDto> {
         log.info("CONTROLLER | path: '.../todos', method: 'GET', page:'number=${page.pageNumber}, size=${page.pageSize}, sortBy=${page.sort}', filter=${filter}")
@@ -34,7 +34,7 @@ class TodoController(
         return todoService.getAll(page, filter)
     }
 
-    @GetMapping("/todo/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getById(@PathVariable id: Long): TodoDto {
         log.info("CONTROLLER | path: '.../todo/$id', method: 'GET'")
@@ -42,7 +42,7 @@ class TodoController(
         return todoService.getById(id)
     }
 
-    @PostMapping("/create_todo")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody @Valid todoDto: TodoDto): TodoDto {
         log.info("CONTROLLER | path: '.../create_todo', method: 'POST', body: '$todoDto'")
@@ -50,7 +50,7 @@ class TodoController(
         return todoService.create(todoDto)
     }
 
-    @PutMapping("/update_todo/{id}")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun update(@PathVariable id: Long, @RequestBody @Valid todoDto: TodoDto): TodoDto {
         log.info("CONTROLLER | path: '.../update_todo/$id', method: 'PUT', body: '$todoDto'")
@@ -58,7 +58,7 @@ class TodoController(
         return todoService.update(id, todoDto)
     }
 
-    @DeleteMapping("/delete_todo/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Long) {
         log.info("CONTROLLER | path: '.../delete_todo/$id', method: 'DELETE'")
