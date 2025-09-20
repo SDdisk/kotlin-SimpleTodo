@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-todo
+      author: Artem Rynochnov
+      changes:
+        - createTable:
+            tableName: todo_table
+            columns:
+              # ID
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              # TITLE
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              # DESCRIPTION
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: false
+              # IS_COMPLETED
+              - column:
+                  name: is_completed
+                  type: boolean
+                  constraints:
+                    nullable: false
+              # CREATED_AT
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+              # UPDATED_AT
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false

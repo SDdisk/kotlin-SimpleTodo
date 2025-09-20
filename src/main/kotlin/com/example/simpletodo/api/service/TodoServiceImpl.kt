@@ -106,11 +106,17 @@ class TodoServiceImpl(
         val predicates = mutableListOf<Predicate>()
 
         this.title?.let { predicates.add(
-            cb.like(root.get("title"), "$it%")
+            cb.like(
+                cb.lower(root.get("title")),
+                "${it.lowercase()}%"
+            )
         ) }
 
         this.description?.let { predicates.add(
-            cb.like(root.get("description"), "$it%")
+            cb.like(
+                cb.lower(root.get("description")), // cb.lower и производительность
+                "${it.lowercase()}%"
+            )
         ) }
 
         this.isCompleted?.let { predicates.add(
