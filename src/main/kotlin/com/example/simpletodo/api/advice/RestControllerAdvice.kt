@@ -34,7 +34,7 @@ class RestControllerAdvice {
     }
 
     private fun logHandle(ex: Exception) {
-        log.error("\"EXCEPTION HANDLER | Catch: '${ex.javaClass.simpleName}', message: '${ex.message}'")
+        log.error("EXCEPTION HANDLER | Catch: '${ex.javaClass.simpleName}', message: '${ex.message}'")
     }
 
     companion object {
