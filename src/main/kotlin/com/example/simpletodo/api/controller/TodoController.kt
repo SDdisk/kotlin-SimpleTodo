@@ -3,7 +3,7 @@ package com.example.simpletodo.api.controller
 import com.example.simpletodo.api.dto.FilterDto
 import com.example.simpletodo.api.dto.PageDto
 import com.example.simpletodo.api.dto.TodoDto
-import com.example.simpletodo.api.service.TodoService
+import com.example.simpletodo.service.TodoService
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Pageable

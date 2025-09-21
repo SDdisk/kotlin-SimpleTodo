@@ -1,6 +1,6 @@
-package com.example.simpletodo.api.advice
+package com.example.simpletodo.api.handler
 
-import com.example.simpletodo.api.exception.TodoNotFoundException
+import com.example.simpletodo.exception.TodoNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.time.LocalDateTime
 
 @RestControllerAdvice
-class RestControllerAdvice {
+class GlobalExceptionHandler {
 
     @ExceptionHandler(exception = [TodoNotFoundException::class])
     fun handleTodoNotFound(ex: TodoNotFoundException): ErrorResponse {

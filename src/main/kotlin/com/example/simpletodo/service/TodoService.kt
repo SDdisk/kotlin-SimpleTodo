@@ -1,4 +1,4 @@
-package com.example.simpletodo.api.service
+package com.example.simpletodo.service
 
 import com.example.simpletodo.api.dto.FilterDto
 import com.example.simpletodo.api.dto.PageDto

@@ -1,9 +1,9 @@
-package com.example.simpletodo.api.service
+package com.example.simpletodo.service
 
 import com.example.simpletodo.api.dto.FilterDto
 import com.example.simpletodo.api.dto.PageDto
 import com.example.simpletodo.api.dto.TodoDto
-import com.example.simpletodo.api.exception.TodoNotFoundException
+import com.example.simpletodo.exception.TodoNotFoundException
 import com.example.simpletodo.store.entity.Todo
 import com.example.simpletodo.store.repository.TodoRepository
 import jakarta.persistence.criteria.Predicate

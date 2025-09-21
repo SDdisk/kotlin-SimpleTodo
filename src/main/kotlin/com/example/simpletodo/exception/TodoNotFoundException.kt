@@ -1,4 +1,4 @@
-package com.example.simpletodo.api.exception
+package com.example.simpletodo.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
